@@ -1,0 +1,6 @@
+{
+    "name" : "Rintly --Development",
+    "mail" : {
+        "host" : "dev-mail-server"
+    }
+}
