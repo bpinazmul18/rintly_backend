@@ -1,5 +1,5 @@
 {
-    "naem" : "Rintly --Production",
+    "name" : "Rintly --Production",
     "mail" : {
         "host" : "prod-mail-server"
     }
