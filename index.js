@@ -34,7 +34,7 @@ if(app.get('env') === 'development') {
 // mongoose practice
 mongoose.connect('mongodb://localhost/playground')
     .then(() => console.log('Successfully connected the MongoDB...'))
-    .catch((err) => console.log('Failed to connected the MongoDB...'))
+    .catch((err) => console.log('Failed to connected the MongoDB...', err))
 
 
 // schema
@@ -50,10 +50,10 @@ const Course = mongoose.model('Course', courseSchema)
 
 async function createCourse () {
     const course = new Course({
-        name: 'Angular course',
+        name: 'Node course',
         author: 'Rabu',
-        tags: ['angular', 'frontend'],
-        isPublished: true
+        tags: ['node', 'backend'],
+        isPublished: false
     })
     
     const result = await course.save()
@@ -88,7 +88,8 @@ async function getCourses () {
     console.log(courses)
 }
 
-getCourses()
+// getCourses()
+createCourse()
 
 // Routes
 app.use('/', home)
