@@ -11,6 +11,7 @@ const app = express()
  */
 const genres = require('./routes/genres')
 const home = require('./routes/home')
+const res = require('express/lib/response')
 
 const port = process.env.PORT || 3001
 
@@ -103,7 +104,25 @@ async function getCourses () {
     console.log(courses)
 }
 
-getCourses()
+async function updateCourse (id) {
+    const course = await Course.findById(id)
+    if (!course) return
+
+    course.isPublished = true
+    course.author = 'Nazu'
+
+    // course.set({
+    //     isPublished: true,
+    //     author: 'Nazu'
+    // })
+
+    const result = await course.save()
+    console.log(result);
+}
+
+updateCourse('628bbe236d60fb100d35469d')
+
+// getCourses()
 // createCourse()
 
 // Routes
