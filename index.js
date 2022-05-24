@@ -79,8 +79,17 @@ async function getCourses () {
         // .find({ price: { $gte: 10, $lte: 20 }})
         // .find({ price: { $in: [ 10, 15, 20 ]}})
         .find()
-        .or([{ author: 'Nazmul' }, { isPublished: false }])
-        .and([{}])
+        // .find({ author: /pattern/})
+        // Starts with Rabu
+        // .find({ author: /^Rabu/})
+        // End with Borsha
+        // .find({ author: /Borsha$/})
+        // Case insensitive
+        // .find({ author: /Borsha$/i})
+        // Contains Rabu
+        .find({ author: /.*Rabu*./i})
+        // .or([{ author: 'Nazmul' }, { isPublished: false }])
+        // .and([{}])
         .limit(10)
         .sort({ name: 1})
         .select({ name: 1, tags: 1, author: 1})
