@@ -73,6 +73,9 @@ async function getCourses () {
     // or
     // and
 
+    const pageNumber = 2
+    const pageSize = 10
+
     const courses = await Course
         // .find({ author: 'Rabu', isPublished: true})
         // .find({ price: 10 })
@@ -91,7 +94,8 @@ async function getCourses () {
         // .or([{ author: 'Nazmul' }, { isPublished: false }])
         // .and([{}])
         .find({ author: 'Rabu'})
-        .limit(10)
+        .skip((pageNumber -1 ) * pageSize)
+        .limit(pageSize)
         .sort({ name: 1})
         // .select({ name: 1, tags: 1, author: 1})
         // Count
