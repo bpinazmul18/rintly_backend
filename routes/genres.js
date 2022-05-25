@@ -22,22 +22,21 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     // Validate input field
-    const {error, value} = validation(req.body.name)
+    const { error, value } = validation(req.body.name)
     if(error) return res.status(400).send(error['details'][0].message)
 
     // New genre
-    const genre = {
-        id: genres.length + 1,
-        name: value['name']
+    let genre = new Genre({ name: value['name'] })
+
+    // Save to database and return to client
+    try {
+        genre = await genre.save()
+        res.send(genre)
+    } catch (ex) {
+        res.status(500).send('Server error!')
     }
-
-    // Add to database
-    genres.push(genre)
-
-    // Response to the client
-    res.send(JSON.stringify(genre))
 })
 
 router.put("/:id", (req, res) => {
