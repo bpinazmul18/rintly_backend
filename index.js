@@ -79,7 +79,7 @@ const Course = mongoose.model('Course', courseSchema)
 async function createCourse () {
     const course = new Course({
         name: 'Node course',
-        category: 'web',
+        category: '-',
         author: 'Rabu',
         tags: [],
         // tags: null,
@@ -92,7 +92,9 @@ async function createCourse () {
         const result = await course.save()
         console.log(`Successfully save new course: ${result}`)
     } catch (ex) {
-        console.log(ex.message)
+        for(field in ex.errors) {
+            console.log(ex.errors[field].message)
+        }
     }
 
     // const result = await course.save()
