@@ -2,6 +2,7 @@ const debug = require('debug')('app:startup')
 const morgan = require('morgan')
 const helmet = require('helmet')
 const express = require('express')
+const mongoose = require('mongoose')
 const app = express()
 
 /**
@@ -11,6 +12,11 @@ const genres = require('./routes/genres')
 const home = require('./routes/home')
 
 const port = process.env.PORT || 3001
+
+// Database connection
+mongoose.connect('mongodb://localhost/rintly')
+    .then(() => console.log('Connected to MongoDB.'))
+    .catch((ex) => console.error('Couldn\'t connect to MongoDB!', ex.message))
 
 // Middleware
 app.set('view engine', 'pug')
