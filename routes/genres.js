@@ -1,17 +1,25 @@
 const Joi = require('joi')
 const express = require('express')
+const mongoose = require('mongoose')
 const router = express.Router()
 
-// Data
-const genres = [
-    {id: 1, name: 'action'},
-    {id: 2, name: 'comedy'},
-    {id: 3, name: 'thiler'},
-    {id: 4, name: 'prank'}
-]
+// Schema and Modal
+const Genre = mongoose.model('Genre', new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        minLength: 5,
+        maxLength: 50
+    }
+}))
 
-router.get('/', (req, res) => {
-    res.send(JSON.stringify(genres))
+router.get('/', async (req, res) => {
+    try {
+        const genres = await Genre.find().sort('name')
+        res.send(genres)
+    } catch (ex) {
+        res.status(500).send('Server error!')
+    }
 })
 
 router.post('/', (req, res) => {
