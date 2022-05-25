@@ -82,7 +82,8 @@ async function createCourse () {
         category: 'web',
         author: 'Rabu',
         // tags: [],
-        tags: null,
+        // tags: null,
+        tags: ['node, backend'],
         isPublished: true,
         price: 50
     })
