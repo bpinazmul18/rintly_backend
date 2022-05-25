@@ -49,7 +49,10 @@ const courseSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ['web', 'mobile', 'network']
+        enum: ['web', 'mobile', 'network'],
+        lowercase: true,
+        // uppercase: true,
+        trim: true
     },
     author: String,
     tags: {
@@ -70,7 +73,9 @@ const courseSchema = new mongoose.Schema({
         type: Number,
         required: function () { return this.isPublished},
         min: 20,
-        max: 200
+        max: 200,
+        get: v => Math.round(v),
+        set: v => Math.round(v)
     }
 })
 
@@ -79,13 +84,13 @@ const Course = mongoose.model('Course', courseSchema)
 async function createCourse () {
     const course = new Course({
         name: 'Node course',
-        category: '-',
+        category: 'Web',
         author: 'Rabu',
-        tags: [],
+        // tags: [],
         // tags: null,
-        // tags: ['node, backend'],
+        tags: ['node, backend'],
         isPublished: true,
-        price: 50
+        price: 50.5
     })
 
     try {
@@ -101,7 +106,7 @@ async function createCourse () {
     // console.log(`Successfully save new course: ${result}`)
 }
 
-async function getCourses () {
+async function getCourses (id) {
     // eq (equal)
     // ne (not equal)
     // gt (greater than)
@@ -134,14 +139,15 @@ async function getCourses () {
         // .find({ author: /.*Rabu*./i})
         // .or([{ author: 'Nazmul' }, { isPublished: false }])
         // .and([{}])
-        .find({ author: 'Rabu'})
-        .skip((pageNumber -1 ) * pageSize)
-        .limit(pageSize)
+        // .find({ author: 'Rabu'})
+        // .skip((pageNumber -1 ) * pageSize)
+        // .limit(pageSize)
+        .find({ _id: id})
         .sort({ name: 1})
-        // .select({ name: 1, tags: 1, author: 1})
+        .select({ name: 1, tags: 1, author: 1, price: 1})
         // Count
-        .count()
-    console.log(courses)
+        // .count()
+    console.log(courses[0].price)
 }
 
 async function updateCourse (id) {
@@ -186,8 +192,8 @@ async function removeCourse (id) {
 
 // removeCourse('628bbe236d60fb100d35469d')
 // updateCourse('628bbe236d60fb100d35469d')
-// getCourses()
-createCourse()
+getCourses('628dd6071a3fe89ceee22125')
+// createCourse()
 
 // Routes
 app.use('/', home)
