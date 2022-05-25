@@ -40,11 +40,31 @@ mongoose.connect('mongodb://localhost/playground')
 
 // schema
 const courseSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true,
+        minLength: 5,
+        maxLength: 255,
+        // match: /pattern/
+    },
+    category: {
+        type: String,
+        required: true,
+        enum: ['web', 'mobile', 'network']
+    },
     author: String,
     tags: [ String ],
-    date: { type: Date, default: Date.now()},
-    isPublished: Boolean
+    date: {
+        type: Date,
+        default: Date.now()
+    },
+    isPublished: Boolean,
+    price: {
+        type: Number,
+        required: function () { return this.isPublished},
+        min: 20,
+        max: 200
+    }
 })
 
 const Course = mongoose.model('Course', courseSchema)
@@ -52,13 +72,22 @@ const Course = mongoose.model('Course', courseSchema)
 async function createCourse () {
     const course = new Course({
         name: 'Node course',
+        category: '-',
         author: 'Rabu',
         tags: ['node', 'backend'],
-        isPublished: false
+        isPublished: true,
+        price: 50
     })
-    
-    const result = await course.save()
-    console.log(`Successfully save new course: ${result}`)
+
+    try {
+        const result = await course.save()
+        console.log(`Successfully save new course: ${result}`)
+    } catch (ex) {
+        console.log(ex.message)
+    }
+
+    // const result = await course.save()
+    // console.log(`Successfully save new course: ${result}`)
 }
 
 async function getCourses () {
@@ -144,10 +173,10 @@ async function removeCourse (id) {
     console.log(course);
 }
 
-removeCourse('628bbe236d60fb100d35469d')
+// removeCourse('628bbe236d60fb100d35469d')
 // updateCourse('628bbe236d60fb100d35469d')
 // getCourses()
-// createCourse()
+createCourse()
 
 // Routes
 app.use('/', home)
