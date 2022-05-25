@@ -39,20 +39,17 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.put("/:id", (req, res) => {
-    // Find genre by ID
-    const genre = genres.find(c => c.id === parseInt(req.params.id))
-    if(!genre) res.status(404).send('genre was not found by given ID!')
-
+router.put("/:id", async (req, res) => {
     // Get data by ID and validate input field
     const {error, value} = validation(req.body.name)
     if(error) return res.status(400).send(error['details'][0].message)
 
-    // Update courese
-    genre.name = value['name']
+    // Find genre by ID and update
+    const genre = await Genre.findByIdAndUpdate(req.params.id, {name: value['name']}, { new: true})
+    if(!genre) return res.status(404).send('genre was not found by given ID!')
 
     // Response to the client
-    res.send(JSON.stringify(genre))
+    return res.send(genre)
 })
 
 router.get('/:id', (req, res) => {
