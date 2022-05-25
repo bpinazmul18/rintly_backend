@@ -56,7 +56,7 @@ const courseSchema = new mongoose.Schema({
       type: Array,
       validate: {
           validator: function (v) {
-              return v && v.length > 0
+              return Promise.resolve( v && v.length > 0)
           },
           message: 'A course should have at list one tag.'
       }
@@ -81,9 +81,9 @@ async function createCourse () {
         name: 'Node course',
         category: 'web',
         author: 'Rabu',
-        // tags: [],
+        tags: [],
         // tags: null,
-        tags: ['node, backend'],
+        // tags: ['node, backend'],
         isPublished: true,
         price: 50
     })
