@@ -11,7 +11,6 @@ const app = express()
  */
 const genres = require('./routes/genres')
 const home = require('./routes/home')
-const res = require('express/lib/response')
 
 const port = process.env.PORT || 3001
 
