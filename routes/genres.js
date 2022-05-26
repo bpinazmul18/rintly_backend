@@ -16,9 +16,9 @@ const Genre = mongoose.model('Genre', new mongoose.Schema({
 router.get('/', async (req, res) => {
     try {
         const genres = await Genre.find().sort('name')
-        res.send(genres)
+        return res.send(genres)
     } catch (ex) {
-        res.status(500).send('Server error!')
+        return res.status(500).send('Server error!', ex.message)
     }
 })
 
@@ -33,9 +33,9 @@ router.post('/', async (req, res) => {
     // Save to database and return to client
     try {
         genre = await genre.save()
-        res.send(genre)
+        return res.send(genre)
     } catch (ex) {
-        res.status(500).send('Server error!')
+        return res.status(500).send('Server error!', ex.message)
     }
 })
 
@@ -63,7 +63,7 @@ router.get('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     // Find user by ID
     const genre = await Genre.findByIdAndRemove(req.params.id)
-    if(!genre) res.status(404).send('genre was not found by given ID!')
+    if(!genre) return res.status(404).send('genre was not found by given ID!')
 
     // Response to the client
     return res.send(genre)
