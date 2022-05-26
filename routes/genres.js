@@ -66,11 +66,11 @@ router.delete('/:id', async (req, res) => {
     if(!genre) res.status(404).send('genre was not found by given ID!')
 
     // Response to the client
-    res.send(genre)
+    return res.send(genre)
 })
 
 
-// Validateion
+// Validation
 const validation = (genre) => {
     const schema = Joi.object({
         name: Joi.string().min(3).required()
