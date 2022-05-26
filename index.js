@@ -10,6 +10,7 @@ const app = express()
  */
 const genres = require('./routes/genres')
 const home = require('./routes/home')
+const customers = require('./routes/customers')
 
 const port = process.env.PORT || 3001
 
@@ -36,5 +37,6 @@ if(app.get('env') === 'development') {
 // Routes
 app.use('/', home)
 app.use('/api/genres', genres)
+app.use('/api/customers', customers)
 
 app.listen(port, ()=> console.log(`App listening on port http://localhost:${port}`))
