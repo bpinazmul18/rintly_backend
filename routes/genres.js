@@ -60,17 +60,13 @@ router.get('/:id', async (req, res) => {
     return res.send(genre)
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
     // Find user by ID
-    const genre = genres.find(c => c.id === parseInt(req.params.id))
+    const genre = await Genre.findByIdAndRemove(req.params.id)
     if(!genre) res.status(404).send('genre was not found by given ID!')
 
-    // Delete genre
-    const index = genres.indexOf(genre)
-    genres.splice(index, 1)
-
     // Response to the client
-    res.send(JSON.stringify(genre))
+    res.send(genre)
 })
 
 
