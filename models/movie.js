@@ -26,14 +26,14 @@ const Movie = new mongoose.model('Movie', new mongoose.Schema({
         type: Number,
         required: true,
         min: 0,
-        max: 255
+        max: 5
     }
 }))
 
 function validateMovie (movie) {
     const schema = Joi.object({
         title: Joi.string().min(5).max(55).required(),
-        genreId: Joi.objectId(),
+        genreId: Joi.string().regex(/^[0-9a-fA-F]{24}$}/),
         numberInStock: Joi.number().min(0).required(),
         dailyRentalRate: Joi.number().min(0).required()
     })
