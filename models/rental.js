@@ -63,10 +63,10 @@ const Rental = mongoose.model('Rental', rentalSchema)
 // Validation
 function validateRental (rental) {
     const schema = Joi.object({
-        customerId: Joi.string().regex(/^[0-9a-fA-F]{24}$}/),
-        movieId: Joi.string().regex(/^[0-9a-fA-F]{24}$}/)
-        // customerId: Joi.objectId().required(),
-        // movieId: Joi.objectId().required()
+        // customerId: Joi.string().regex(/^[0-9a-fA-F]{24}$}/),
+        // movieId: Joi.string().regex(/^[0-9a-fA-F]{24}$}/)
+        customerId: Joi.objectId().required(),
+        movieId: Joi.objectId().required()
     })
 
     return schema.validate(rental)

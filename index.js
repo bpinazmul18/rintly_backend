@@ -1,4 +1,5 @@
 const debug = require('debug')('app:startup')
+const config = require('config')
 const morgan = require('morgan')
 const helmet = require('helmet')
 const express = require('express')
@@ -18,7 +19,7 @@ const rentals = require('./routes/rentals')
 const port = process.env.PORT || 3001
 
 // Database connection
-mongoose.connect('mongodb://localhost/rintly')
+mongoose.connect(config.get('dbURI'), { useNewUrlParser: true })
     .then(() => console.log('Connected to MongoDB.'))
     .catch((ex) => console.error('Couldn\'t connect to MongoDB!', ex.message))
 

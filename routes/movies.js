@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
         const result = await movie.save()
         return res.send(result)
     } catch (ex) {
-        return res.status(500).send('Server error!', ex.message)
+        return res.status(500).send(`Server error! ${ex.message}`)
     }
 })
 

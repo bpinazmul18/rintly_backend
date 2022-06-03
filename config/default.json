@@ -1,3 +1,4 @@
 {
-    "name": "Rintly --Default"
+    "name": "Rintly --Default",
+    "dbURI": "mongodb://localhost:27017/rintly"
 }
