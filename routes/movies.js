@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
 
         // Save to database and return to client
         await movie.save()
-        return res.send(result)
+        return res.send(movie)
     } catch (ex) {
         return res.status(500).send(`Server error! ${ex.message}`)
     }
