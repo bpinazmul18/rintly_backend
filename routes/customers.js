@@ -18,11 +18,11 @@ router.post('/', async (req, res) => {
     if(error) return res.status(400).send(error['details'][0].message)
 
     // New customer
-    let customer = new Customer(value)
+    const customer = new Customer(value)
 
     // Save to database and return to client
     try {
-        customer = await customer.save()
+        await customer.save()
         return res.send(customer)
     } catch (ex) {
         return res.status(500).send(`Server error! ${ex.message}`)
