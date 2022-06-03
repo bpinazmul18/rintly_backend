@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
         const customers = await Customer.find().sort('name')
         return res.send(customers)
     } catch (ex) {
-        return res.status(500).send('Server error!', ex.message)
+        return res.status(500).send(`Server error! ${ex.message}`)
     }
 })
 
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
         customer = await customer.save()
         return res.send(customer)
     } catch (ex) {
-        return res.status(500).send('Server error!', ex.message)
+        return res.status(500).send(`Server error! ${ex.message}`)
     }
 })
 
