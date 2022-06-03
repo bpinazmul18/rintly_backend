@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
         if(!genre) return res.status(400).send('Invalid genre.')
 
         // New movie
-        let movie = new Movie({
+         const movie = new Movie({
             title: value['title'],
             genre: {
                 _id: genre._id,
@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
         })
 
         // Save to database and return to client
-        const result = await movie.save()
+        await movie.save()
         return res.send(result)
     } catch (ex) {
         return res.status(500).send(`Server error! ${ex.message}`)
