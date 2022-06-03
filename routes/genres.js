@@ -17,11 +17,11 @@ router.post('/', async (req, res) => {
     if(error) return res.status(400).send(error['details'][0].message)
 
     // New genre
-    let genre = new Genre(value)
+    const genre = new Genre(value)
 
     // Save to database and return to client
     try {
-        genre = await genre.save()
+        await genre.save()
         return res.send(genre)
     } catch (ex) {
         return res.status(500).send(`Server error! ${ex.message}`)
