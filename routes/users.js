@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const express = require('express')
 const router = express.Router()
 
@@ -12,10 +13,12 @@ router.post('/', async (req, res) => {
         let user = await User.findOne({ email: value['email']})
         if (user) return res.status(400).send('User already registered.')
 
-        user = await new User(value)
+        user = await new User(_.pick(value, ['name', 'email', 'password']))
         await user.save()
 
-        return res.send(user)
+        const result = _.pick(user, ['_id', 'name', 'email'])
+
+        return res.send(result)
     } catch (ex) {
         return res.status(500).send(`Server error ${ex.message}`)
     }
