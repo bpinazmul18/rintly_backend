@@ -25,6 +25,12 @@ mongoose.connect(config.get('dbURI'), { useNewUrlParser: true })
     .then(() => console.log('Connected to MongoDB.'))
     .catch((ex) => console.error('Couldn\'t connect to MongoDB!', ex.message))
 
+// If jwtPrivateKey is undefined
+if (!config.get('jwtPrivateKey')) {
+    console.error('FATAL ERROR: jwtPrivateKey is not defined.')
+    process.exit(1)
+}
+
 // Middleware
 app.set('view engine', 'pug')
 app.set('views', "./views")
