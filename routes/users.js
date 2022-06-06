@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken')
+const config = require('config')
 const bcrypt = require('bcrypt')
 const _ = require('lodash')
 const express = require('express')
@@ -22,7 +24,8 @@ router.post('/', async (req, res) => {
 
         const result = _.pick(user, ['_id', 'name', 'email'])
 
-        return res.send(result)
+        const token = user.generateAuthToken()
+        return res.header('x-auth-token', token).send(result)
     } catch (ex) {
         return res.status(500).send(`Server error ${ex.message}`)
     }
