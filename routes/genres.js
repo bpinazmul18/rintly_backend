@@ -1,5 +1,6 @@
 const express = require('express')
 const { Genre, validate } = require('../models/genre')
+const auth = require('../middleware/auth')
 const router = express.Router()
 
 router.get('/', async (req, res) => {
@@ -11,7 +12,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     // Validate input field
     const { error, value } = validate(req.body)
     if(error) return res.status(400).send(error['details'][0].message)
