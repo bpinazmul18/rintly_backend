@@ -1,18 +1,15 @@
 const express = require('express')
+const asyncMiddleware = require('../middleware/async')
 const { Customer, validate } = require('../models/customer')
 const router = express.Router()
 
 
-router.get('/', async (req, res) => {
-    try {
-        const customers = await Customer.find().sort('name')
-        return res.send(customers)
-    } catch (ex) {
-        return res.status(500).send(`Server error! ${ex.message}`)
-    }
-})
+router.get('/', asyncMiddleware(async (req, res) => {
+    const customers = await Customer.find().sort('name')
+    return res.send(customers)
+}))
 
-router.post('/', async (req, res) => {
+router.post('/', asyncMiddleware(async (req, res) => {
     // Validate input field
     const { error, value } = validate(req.body)
     if(error) return res.status(400).send(error['details'][0].message)
@@ -21,12 +18,8 @@ router.post('/', async (req, res) => {
     const customer = new Customer(value)
 
     // Save to database and return to client
-    try {
-        await customer.save()
-        return res.send(customer)
-    } catch (ex) {
-        return res.status(500).send(`Server error! ${ex.message}`)
-    }
-})
+    await customer.save()
+    return res.send(customer)
+}))
 
 module.exports = router

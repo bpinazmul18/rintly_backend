@@ -1,12 +1,9 @@
 const express = require('express')
+const asyncMiddleware = require('../middleware/async')
 const router = express.Router()
 
-router.get('/', async (req, res) => {
-    try {
-        res.render('index', {title: 'My express app.', message: 'Hello world'})
-    } catch (ex) {
-        return res.status(500).send(`Server error! ${ex.message}`)
-    }
-})
+router.get('/', asyncMiddleware(async (req, res) => {
+    res.render('index', {title: 'My express app.', message: 'Hello world'})
+}))
 
 module.exports = router

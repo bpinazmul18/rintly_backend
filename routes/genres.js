@@ -2,19 +2,15 @@ const express = require('express')
 const { Genre, validate } = require('../models/genre')
 const auth = require('../middleware/auth')
 const admin = require('../middleware/admin')
+const asyncMiddleware = require('../middleware/async')
 const router = express.Router()
 
-router.get('/', async (req, res, next) => {
-    try {
-        throw new Error('Hello world')
-        const genres = await Genre.find().sort('name')
-        return res.send(genres)
-    } catch (ex) {
-        next(ex)
-    }
-})
+router.get('/', asyncMiddleware(async (req, res) => {
+    const genres = await Genre.find().sort('name')
+    return res.send(genres)
+}))
 
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, asyncMiddleware(async (req, res) => {
     // Validate input field
     const { error, value } = validate(req.body)
     if(error) return res.status(400).send(error['details'][0].message)
@@ -23,55 +19,39 @@ router.post('/', auth, async (req, res) => {
     const genre = new Genre(value)
 
     // Save to database and return to client
-    try {
-        await genre.save()
-        return res.send(genre)
-    } catch (ex) {
-        return res.status(500).send(`Server error! ${ex.message}`)
-    }
-})
+    await genre.save()
+    return res.send(genre)
+}))
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", asyncMiddleware(async (req, res) => {
     // Get data by ID and validate input field
     const {error, value} = validate(req.body)
     if(error) return res.status(400).send(error['details'][0].message)
 
-    try {
-        // Find genre by ID and update
-        const genre = await Genre.findByIdAndUpdate(req.params.id, value, { new: true})
-        if(!genre) return res.status(404).send('genre was not found by given ID!')
+    // Find genre by ID and update
+    const genre = await Genre.findByIdAndUpdate(req.params.id, value, { new: true})
+    if(!genre) return res.status(404).send('genre was not found by given ID!')
 
-        // Response to the client
-        return res.send(genre)
-    } catch (ex) {
-        return res.status(500).send(`Server error! ${ex.message}`)
-    }
-})
+    // Response to the client
+    return res.send(genre)
+}))
 
-router.get('/:id', async (req, res) => {
-    try {
-        // Find user by ID
-        const genre = await Genre.findById(req.params.id)
-        if(!genre) return res.status(404).send('genre was not found by given ID!')
+router.get('/:id', asyncMiddleware(async (req, res) => {
+    // Find user by ID
+    const genre = await Genre.findById(req.params.id)
+    if(!genre) return res.status(404).send('genre was not found by given ID!')
 
-        // Response to the client
-        return res.send(genre)
-    } catch (ex) {
-        return res.status(500).send(`Server error! ${ex.message}`)
-    }
-})
+    // Response to the client
+    return res.send(genre)
+}))
 
-router.delete('/:id', [auth, admin], async (req, res) => {
-    try {
-        // Find user by ID
-        const genre = await Genre.findByIdAndRemove(req.params.id)
-        if(!genre) return res.status(404).send('genre was not found by given ID!')
+router.delete('/:id', [auth, admin], asyncMiddleware(async (req, res) => {
+    // Find user by ID
+    const genre = await Genre.findByIdAndRemove(req.params.id)
+    if(!genre) return res.status(404).send('genre was not found by given ID!')
 
-        // Response to the client
-        return res.send(genre)
-    } catch (ex) {
-        return res.status(500).send(`Server error! ${ex.message}`)
-    }
-})
+    // Response to the client
+    return res.send(genre)
+}))
 
 module.exports = router
