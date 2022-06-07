@@ -4,12 +4,13 @@ const auth = require('../middleware/auth')
 const admin = require('../middleware/admin')
 const router = express.Router()
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try {
+        throw new Error('Hello world')
         const genres = await Genre.find().sort('name')
         return res.send(genres)
     } catch (ex) {
-        return res.status(500).send(`Server error! ${ex.message}`)
+        next(ex)
     }
 })
 
