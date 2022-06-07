@@ -5,16 +5,15 @@ const router = express.Router()
 
 const { User, validate } = require('../models/user')
 const auth = require('../middleware/auth')
-const asyncMiddleware = require('../middleware/async')
 
 
-router.get('/me', asyncMiddleware(auth, async (req, res) => {
+router.get('/me', auth, async (req, res) => {
     const user = await User.findById(req.user.id).select('-password')
     return res.send(user)
-}))
+})
 
 
-router.post('/', asyncMiddleware(async (req, res) => {
+router.post('/', async (req, res) => {
     const {error, value} = validate(req.body)
     if (error) return res.status(400).send(error['details'][0].message)
 
@@ -31,6 +30,6 @@ router.post('/', asyncMiddleware(async (req, res) => {
 
     const token = user.generateAuthToken()
     return res.header('x-auth-token', token).send(result)
-}))
+})
 
 module.exports = router

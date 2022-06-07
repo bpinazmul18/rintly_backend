@@ -3,7 +3,6 @@ const express = require('express')
 const router = express.Router()
 
 const Fawn = require('fawn')
-const asyncMiddleware = require('../middleware/async')
 
 const { Customer } = require('../models/customer')
 const { Movie } = require('../models/movie')
@@ -11,15 +10,15 @@ const { validate, Rental } = require('../models/rental')
 
 Fawn.init(config.get('dbURI'))
 
-router.get('/', asyncMiddleware(async(req, res) => {
+router.get('/', async(req, res) => {
     const rentals = await Rental.find()
         .select('-__v')
         .sort('-dateOut')
 
     return res.send(rentals)
-}))
+})
 
-router.post('/', asyncMiddleware(async(req, res) => {
+router.post('/', async(req, res) => {
     // Validate client
     const {error, value} = validate(req.body)
     if(error) return res.status(400).send(error['details'][0].message)
@@ -57,6 +56,6 @@ router.post('/', asyncMiddleware(async(req, res) => {
         .run()
 
     return res.send(rental)
-}))
+})
 
 module.exports = router

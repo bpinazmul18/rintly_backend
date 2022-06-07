@@ -1,15 +1,14 @@
 const express = require('express')
-const asyncMiddleware = require('../middleware/async')
 const { Customer, validate } = require('../models/customer')
 const router = express.Router()
 
 
-router.get('/', asyncMiddleware(async (req, res) => {
+router.get('/', async (req, res) => {
     const customers = await Customer.find().sort('name')
     return res.send(customers)
-}))
+})
 
-router.post('/', asyncMiddleware(async (req, res) => {
+router.post('/', async (req, res) => {
     // Validate input field
     const { error, value } = validate(req.body)
     if(error) return res.status(400).send(error['details'][0].message)
@@ -20,6 +19,6 @@ router.post('/', asyncMiddleware(async (req, res) => {
     // Save to database and return to client
     await customer.save()
     return res.send(customer)
-}))
+})
 
 module.exports = router
