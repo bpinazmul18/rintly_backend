@@ -1,6 +1,7 @@
 const express = require('express')
 const { Genre, validate } = require('../models/genre')
 const auth = require('../middleware/auth')
+const admin = require('../middleware/admin')
 const router = express.Router()
 
 router.get('/', async (req, res) => {
@@ -59,7 +60,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
     try {
         // Find user by ID
         const genre = await Genre.findByIdAndRemove(req.params.id)
