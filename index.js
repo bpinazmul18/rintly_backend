@@ -1,4 +1,5 @@
 require('express-async-errors')
+const winston = require("winston")
 const debug = require('debug')('app:startup')
 const config = require('config')
 const morgan = require('morgan')
@@ -19,6 +20,13 @@ const rentals = require('./routes/rentals')
 const users = require('./routes/users')
 const auth = require('./routes/auth')
 const error = require('./middleware/error')
+
+winston.add(new winston.transports.File({
+    name: 'error-file',
+    filename: './logs/exceptions.log',
+    level: 'error',
+    json: false
+}))
 
 const port = process.env.PORT || 3001
 
