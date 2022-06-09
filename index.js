@@ -22,9 +22,20 @@ const users = require('./routes/users')
 const auth = require('./routes/auth')
 const error = require('./middleware/error')
 
+process.on('unhandledRejection', (ex) => {
+    throw ex
+})
+
 winston.add(new winston.transports.File({
     name: 'error-file',
     filename: './logs/exceptions.log',
+    level: 'error',
+    json: false
+}))
+
+winston.handleExceptions(new winston.transports.File({
+    name: 'handle-exceptions',
+    filename: './logs/uncoughtExceptions.log',
     level: 'error',
     json: false
 }))
@@ -36,7 +47,7 @@ winston.add(new winston.transports.MongoDB({
 const port = process.env.PORT || 3001
 
 // Database connection
-mongoose.connect(config.get('dbURI'), { useNewUrlParser: true })
+mongoose.connect(config.get('dbURI'), { useUnifiedTopology:true, useNewUrlParser: true })
     .then(() => console.log('Connected to MongoDB.'))
     .catch((ex) => console.error('Couldn\'t connect to MongoDB!', ex.message))
 
@@ -45,6 +56,12 @@ if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined.')
     process.exit(1)
 }
+
+// throw new Error('Something failed during')
+
+const p = Promise.reject(new Error('Something failed miserably!'))
+p.then(() => console.log('Done!!!'))
+
 
 // Middleware
 app.set('view engine', 'pug')
