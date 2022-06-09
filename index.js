@@ -1,5 +1,6 @@
 require('express-async-errors')
 const winston = require("winston")
+require('winston-mongodb')
 const debug = require('debug')('app:startup')
 const config = require('config')
 const morgan = require('morgan')
@@ -26,6 +27,10 @@ winston.add(new winston.transports.File({
     filename: './logs/exceptions.log',
     level: 'error',
     json: false
+}))
+
+winston.add(new winston.transports.MongoDB({
+    db: 'mongodb://localhost:27017/rintly'
 }))
 
 const port = process.env.PORT || 3001
