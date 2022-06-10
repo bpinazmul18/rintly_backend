@@ -5,9 +5,9 @@ const debug = require('debug')('app:startup')
 const config = require('config')
 const morgan = require('morgan')
 const express = require('express')
-const mongoose = require('mongoose')
 const app = express()
 require('./startup/routes')(app)
+require('./startup/db')()
 
 process.on('unhandledRejection', (ex) => {
     throw ex
@@ -32,11 +32,6 @@ winston.add(new winston.transports.MongoDB({
 }))
 
 const port = process.env.PORT || 3001
-
-// Database connection
-mongoose.connect(config.get('dbURI'), { useUnifiedTopology:true, useNewUrlParser: true })
-    .then(() => console.log('Connected to MongoDB.'))
-    .catch((ex) => console.error('Couldn\'t connect to MongoDB!', ex.message))
 
 // If jwtPrivateKey is undefined
 if (!config.get('jwtPrivateKey')) {
