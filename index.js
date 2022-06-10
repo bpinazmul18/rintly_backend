@@ -1,35 +1,12 @@
-require('express-async-errors')
-const winston = require("winston")
-require('winston-mongodb')
 const debug = require('debug')('app:startup')
 const config = require('config')
 const morgan = require('morgan')
 const express = require('express')
 const app = express()
+
+require('./startup/logging')()
 require('./startup/routes')(app)
 require('./startup/db')()
-
-process.on('unhandledRejection', (ex) => {
-    throw ex
-})
-
-winston.add(new winston.transports.File({
-    name: 'error-file',
-    filename: './logs/exceptions.log',
-    level: 'error',
-    json: false
-}))
-
-winston.handleExceptions(new winston.transports.File({
-    name: 'handle-exceptions',
-    filename: './logs/uncoughtExceptions.log',
-    level: 'error',
-    json: false
-}))
-
-winston.add(new winston.transports.MongoDB({
-    db: 'mongodb://localhost:27017/rintly'
-}))
 
 const port = process.env.PORT || 3001
 
