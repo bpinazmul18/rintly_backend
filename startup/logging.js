@@ -11,7 +11,7 @@ module.exports = function () {
         json: false
     }))
     
-    winston.handleExceptions(new winston.transports.File({
+    winston.exceptions.handle(new winston.transports.File({
         name: 'handle-exceptions',
         filename: './logs/uncoughtExceptions.log',
         level: 'error',
