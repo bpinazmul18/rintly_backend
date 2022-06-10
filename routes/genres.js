@@ -5,7 +5,6 @@ const admin = require('../middleware/admin')
 const router = express.Router()
 
 router.get('/', async (req, res) => {
-    throw new Error('Could not configure this error!')
     const genres = await Genre.find().sort('name')
     return res.send(genres)
 })
