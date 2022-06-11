@@ -1,7 +1,6 @@
 const winston = require('winston')
 require('winston-mongodb')
 require('express-async-errors')
-const config = require('config')
 const debug = require('debug')('app:startup')
 const morgan = require('morgan')
 
@@ -24,9 +23,9 @@ module.exports = function (app) {
         throw ex
     })
     
-    winston.add(new winston.transports.MongoDB({
-        db: config.get('dbURI')
-    }))
+    // winston.add(new winston.transports.MongoDB({
+    //     db: config.get('dbURI')
+    // }))
 
     if(app.get('env') === 'development') {
         app.use(morgan('tiny'))
