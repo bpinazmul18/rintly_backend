@@ -1,0 +1,6 @@
+{"level":"info","message":"App listening on port http://localhost:3001","timestamp":"2022-06-11T15:41:16.514Z"}
+{"level":"info","message":"Connected to MongoDB: mongodb://localhost:27017/rintly","timestamp":"2022-06-11T15:41:16.535Z"}
+{"level":"info","message":"App listening on port http://localhost:3001","timestamp":"2022-06-11T15:41:27.761Z"}
+{"level":"info","message":"Connected to MongoDB: mongodb://localhost:27017/rintly","timestamp":"2022-06-11T15:41:27.782Z"}
+{"level":"info","message":"App listening on port http://localhost:3001","timestamp":"2022-06-11T15:41:47.389Z"}
+{"level":"info","message":"App listening on port http://localhost:3001","timestamp":"2022-06-11T15:42:58.663Z"}

@@ -5,27 +5,19 @@ const debug = require('debug')('app:startup')
 const morgan = require('morgan')
 
 module.exports = function (app) {
-    winston.add(new winston.transports.File({
-        name: 'error-file',
-        filename: './logs/exceptions.log',
-        level: 'error',
-        json: false
-    }))
-    
-    winston.exceptions.handle(new winston.transports.File({
-        name: 'handle-exceptions',
-        filename: './logs/uncoughtExceptions.log',
-        level: 'error',
-        json: false
-    }))
-
-    process.on('unhandledRejection', (ex) => {
-        throw ex
-    })
-    
-    // winston.add(new winston.transports.MongoDB({
-    //     db: config.get('dbURI')
-    // }))
+    winston.handleExceptions(
+        new winston.transports.Console({ colorize: true, prettyPrint: true }),
+        new winston.transports.File({ filename: 'uncaughtExceptions.log' }));
+      
+      process.on('unhandledRejection', (ex) => {
+        throw ex;
+      });
+      
+      winston.add(winston.transports.File, { filename: 'logfile.log' });
+      // winston.add(winston.transports.MongoDB, { 
+      //   db: 'mongodb://localhost/vidly',
+      //   level: 'info'
+      // });  
 
     if(app.get('env') === 'development') {
         app.use(morgan('tiny'))
