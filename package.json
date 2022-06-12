@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index"
+    "start": "nodemon index",
+    "test": "jest"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -27,5 +28,7 @@
     "winston": "^3.7.2",
     "winston-mongodb": "^5.0.7"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^28.1.1"
+  }
 }
