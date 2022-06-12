@@ -22,6 +22,6 @@ describe('Absolute', () => {
 describe('Greet', () => {
     it('Should return a sentence if input is string.', () => {
         const result = lib.greet('Nazmul')
-        expect(result).toBe('Good morning Nazmul')
+        expect(result).toMatch(/Nazmul/)
     })
 })
