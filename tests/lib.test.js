@@ -23,5 +23,6 @@ describe('Greet', () => {
     it('Should return a sentence if input is string.', () => {
         const result = lib.greet('Nazmul')
         expect(result).toMatch(/Nazmul/)
+        expect(result).toContain('Nazmul')
     })
 })
