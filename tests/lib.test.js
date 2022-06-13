@@ -26,3 +26,27 @@ describe('Greet', () => {
         expect(result).toContain('Nazmul')
     })
 })
+
+describe('getCurrencies', () => {
+    it('should return a currencies array!', () => {
+        const result = lib.getCurrencies()
+
+        // Too general
+        expect(result).toBeDefined()
+        expect(result).not.toBeNull()
+
+        // Too specific
+        expect(result[0]).toBe('USD')
+        expect(result[1]).toBe('Taka')
+        expect(result[2]).toBe('Ruppee')
+        expect(result.length).toBe(3)
+
+        // Proper way
+        expect(result).toContain('USD')
+        expect(result).toContain('Taka')
+        expect(result).toContain('Ruppee')
+
+        // Ideal way
+        expect(result).toEqual(expect.arrayContaining(['USD', 'Taka', 'Ruppee']))
+    })
+})

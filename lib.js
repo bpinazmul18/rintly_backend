@@ -8,3 +8,8 @@ module.exports.absolute = function (number) {
 module.exports.greet = function (string) {
     return `Good morning ${string}`
 }
+
+// Testing array
+module.exports.getCurrencies = function () {
+    return ['USD', 'Taka', 'Ruppee']
+}
