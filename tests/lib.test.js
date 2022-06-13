@@ -50,3 +50,14 @@ describe('getCurrencies', () => {
         expect(result).toEqual(expect.arrayContaining(['USD', 'Taka', 'Ruppee']))
     })
 })
+
+describe('getProduct', () => {
+    it('Should return the product with the given id..', () => {
+        const result = lib.getProduct(1)
+        // expect(result).toBe({ id: 1, price: 30})
+        expect(result).toEqual({ id: 1, price: 30})
+        expect(result).toStrictEqual({ id: 1, price: 30})
+        expect(result).toMatchObject({ id: 1, price: 30})
+        expect(result).toHaveProperty('id', '1')
+    })
+})

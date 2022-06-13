@@ -13,3 +13,8 @@ module.exports.greet = function (string) {
 module.exports.getCurrencies = function () {
     return ['USD', 'Taka', 'Ruppee']
 }
+
+// Testing object
+module.exports.getProduct = function (productId) {
+    return {id: productId, price: 30, category: 'a'}
+}
