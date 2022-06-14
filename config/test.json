@@ -1,6 +1,6 @@
 {
     "name": "Rintly --Default",
-    "dbURI": "mongodb://localhost:27017/rintly",
+    "dbURI": "mongodb://localhost:27017/rintly_test",
     "jwtPrivateKey": "123",
     "port": "3001"
 }
