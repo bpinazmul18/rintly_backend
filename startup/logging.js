@@ -1,5 +1,5 @@
 const winston = require('winston')
-require('winston-mongodb')
+// require('winston-mongodb')
 require('express-async-errors')
 const debug = require('debug')('app:startup')
 const morgan = require('morgan')
