@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon index",
-    "test": "jest --watchAll --verbose"
+    "test": "jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1 --verbose",
+    "test:without-server-close": "jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -29,6 +30,7 @@
     "winston-mongodb": "^5.0.7"
   },
   "devDependencies": {
-    "jest": "^28.1.1"
+    "jest": "^28.1.1",
+    "supertest": "^6.2.3"
   }
 }
