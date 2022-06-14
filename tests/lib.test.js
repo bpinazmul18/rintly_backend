@@ -1,5 +1,6 @@
 const lib = require('../lib')
 const db = require('../db')
+const mail = require('../mail')
 
 describe('Absolute', () => {
 
@@ -88,5 +89,22 @@ describe('applyDiscount', () => {
         const order = { customerId: 1, totalPrice: 10}
         const result = lib.applyDiscound(order)
         expect(result).toBe(9)
+    })
+})
+
+describe('notifyUser', () => {
+    it('should send an email to customer.', () => {
+        db.getCustomerSync = function (customerId) {
+            return {email: 'a'}
+        }
+
+        let mailSend = false
+        mail.send = function (email, message) {
+            mailSend = true
+        }
+
+        lib.notifyUser({ customerId: 1})
+
+        expect(mailSend).toBe(true)
     })
 })
