@@ -4,7 +4,7 @@ let server;
 
 describe('/api/genres', () => {
     beforeEach(() => {
-        server = require('../../../index')
+        server = require('../../index')
     })
 
     afterEach(() => {
