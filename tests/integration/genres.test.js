@@ -10,7 +10,7 @@ describe('/api/genres', () => {
 
     afterEach( async () => {
         server.close()
-        await Genre.remove({})
+        await Genre.deleteMany({})
     })
 
     describe('GET /', () => {
@@ -36,6 +36,11 @@ describe('/api/genres', () => {
             const res = await request(server).get(`/api/genres/${genre._id}`)
             expect(res.status).toBe(200)
             expect(res.body).toHaveProperty('name', genre.name)
+        })
+
+        it('should return 404 if invalid id is passed.', async () => {
+            const res = await request(server).get(`/api/genres/628f23b25a6e03c6a795e8f2`)
+            expect(res.status).toBe(404)
         })
     })
 })
