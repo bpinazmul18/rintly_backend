@@ -101,4 +101,33 @@ describe('/api/genres', () => {
 
         })
     })
+
+    describe('PUT /:id', () => {
+        let id
+        let token
+        let newName
+        let genre
+
+        const exec = async () => {
+            return await request(server)
+                .put(`/api/genres/${id}`)
+                .send({ name: newName })
+        }
+
+        beforeEach(async () => {
+            genre = new Genre({ name: 'genre1'})
+            await genre.save()
+
+            token = new User().generateAuthToken()
+            id =genre._id
+
+            newName = 'updatedName'
+        })
+
+        it ('should return 401 if user in not logged in.', async () => {
+            token = ''
+            const res = await exec()
+            expect(res.status).toBe(401)
+        })
+    })
 })
