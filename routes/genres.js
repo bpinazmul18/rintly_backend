@@ -45,7 +45,7 @@ router.get('/:id', async (req, res) => {
     return res.send(genre)
 })
 
-router.delete('/:id', [auth, admin], async (req, res) => {
+router.delete('/:id', [auth, admin, validateObjectId], async (req, res) => {
     // Find user by ID
     const genre = await Genre.findByIdAndRemove(req.params.id)
     if(!genre) return res.status(404).send('genre was not found by given ID!')
