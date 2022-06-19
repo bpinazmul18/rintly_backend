@@ -1,6 +1,7 @@
 const express = require('express')
 const { Genre, validate } = require('../models/genre')
 const auth = require('../middleware/auth')
+const validateObjectId = require('../middleware/validateObjectId')
 const admin = require('../middleware/admin')
 const router = express.Router()
 
@@ -22,7 +23,7 @@ router.post('/', auth, async (req, res) => {
     return res.send(genre)
 })
 
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", [auth, validateObjectId], async (req, res) => {
     // Get data by ID and validate input field
     const {error, value} = validate(req.body)
     if(error) return res.status(400).send(error['details'][0].message)
