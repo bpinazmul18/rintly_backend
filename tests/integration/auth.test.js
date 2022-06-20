@@ -3,11 +3,17 @@ const { User } = require('../../models/user')
 const { Genre } = require('../../models/genre')
 
 
-let server
-
 describe('auth middleware.', () => {
+    let server
     let token
     let name
+
+    const exec = () => {
+        return request(server)
+            .post('/api/genres')
+            .set('x-auth-token', token)
+            .send({ name })
+    }
 
     beforeEach(() => { 
         server = require('../../index')
@@ -18,13 +24,6 @@ describe('auth middleware.', () => {
         await Genre.deleteMany({})
         await server.close() 
     })
-
-    const exec = () => {
-        return request(server)
-            .post('/api/genres')
-            .set('x-auth-token', token)
-            .send({ name })
-    }
 
     it ('should return 401 if no token is provided.', async () => {
         token = ''

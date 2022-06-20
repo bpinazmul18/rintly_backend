@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon index",
-    "test": "jest --watchAll --verbose --coverage",
+    "test": "jest --forceExit --verbose --maxWorkers=1",
     "test:without-server-close": "jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1"
   },
   "dependencies": {
