@@ -72,4 +72,12 @@ describe('/api/returns', () => {
         const res = await exec()
         expect(res.status).toBe(404)
     })
+
+    it('should return 400 if no return is already procesed.', async () => {
+        rental.dateReturned = new Date()
+        await rental.save()
+
+        const res = await exec()
+        expect(res.status).toBe(400)
+    })
 })
