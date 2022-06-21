@@ -28,7 +28,7 @@ router.post('/', auth, async (req, res) => {
         $inc: { numberInStock: 1}
     })
 
-    return res.status(200).send()
+    return res.status(200).send(rental)
 })
 
 module.exports = router
