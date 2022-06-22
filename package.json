@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "export NODE_ENV=production node index.js",
+    "start": "node index.js",
     "test": "jest --forceExit --verbose --maxWorkers=1",
     "test:without-server-close": "jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1"
   },
