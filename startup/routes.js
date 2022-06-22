@@ -18,8 +18,6 @@ module.exports = function (app) {
     app.set('views', "./views")
     app.use(express.json())
     app.use(express.urlencoded({ extended: true}))
-    app.use(helmet())
-    app.use(compression())
     app.use(express.static('public'))
 
 
