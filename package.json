@@ -4,9 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index",
+    "start": "export NODE_ENV=production node index.js",
     "test": "jest --forceExit --verbose --maxWorkers=1",
     "test:without-server-close": "jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1"
+  },
+  "engines": {
+    "node": "14.19.3"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
