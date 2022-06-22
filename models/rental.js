@@ -64,14 +64,19 @@ rentalSchema.statics.lookup = function (customerId, movieId) {
     })
 }
 
+rentalSchema.methods.return = function () {
+    this.dateReturned = new Date()
+
+    const rentalDays = moment().diff(this.dateOut, 'days')
+    this.rentalFee =  rentalDays * this.movie.dailyRentalRate
+}
+
 // Models
 const Rental = mongoose.model('Rental', rentalSchema)
 
 // Validation
 function validateRental (rental) {
     const schema = Joi.object({
-        // customerId: Joi.string().regex(/^[0-9a-fA-F]{24}$}/),
-        // movieId: Joi.string().regex(/^[0-9a-fA-F]{24}$}/)
         customerId: Joi.objectId().required(),
         movieId: Joi.objectId().required()
     })
