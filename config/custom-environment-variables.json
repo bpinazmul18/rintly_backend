@@ -3,5 +3,5 @@
         "password" : "app_password"
     },
     "jwtPrivateKey": "rintly_jwtPrivateKey",
-    "db": "rintly_db"
+    "dbURI": "rintly_db"
 }
