@@ -1,14 +1,17 @@
+const Fawn = require('fawn')
 const config = require('config')
 const express = require('express')
 const router = express.Router()
-
-const Fawn = require('fawn')
 
 const { Customer } = require('../models/customer')
 const { Movie } = require('../models/movie')
 const { validate, Rental } = require('../models/rental')
 
-Fawn.init(config.get('dbURI'))
+try {
+    Fawn.init(config.get('dbURI'))
+} catch (ex) {
+    console.log(ex.message)
+}
 
 router.get('/', async(req, res) => {
     const rentals = await Rental.find()

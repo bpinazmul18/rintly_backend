@@ -1,15 +1,12 @@
 const express = require('express')
-const helmet = require('helmet')
-const compression = require('compression')
-
+const home = require('../routes/home')
 const genres = require('../routes/genres')
 const movies = require('../routes/movies')
-const home = require('../routes/home')
 const customers = require('../routes/customers')
 const rentals = require('../routes/rentals')
 const users = require('../routes/users')
-const auth = require('../routes/auth')
 const returns = require('../routes/returns')
+const auth = require('../routes/auth')
 const error = require('../middleware/error')
 
 module.exports = function (app) {
