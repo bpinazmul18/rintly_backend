@@ -15,6 +15,7 @@
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
     "config": "^3.3.6",
+    "cros": "^1.0.1",
     "debug": "^4.3.3",
     "express": "^4.17.2",
     "express-async-errors": "^3.1.1",
