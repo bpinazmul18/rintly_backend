@@ -28,7 +28,8 @@ router.post('/', async (req, res) => {
             name: genre.name
         },
         numberInStock: value['numberInStock'],
-        dailyRentalRate: value['dailyRentalRate']
+        dailyRentalRate: value['dailyRentalRate'],
+        liked: value['liked']
     })
 
     // Save to database and return to client
