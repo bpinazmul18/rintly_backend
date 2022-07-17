@@ -27,6 +27,10 @@ const Movie = new mongoose.model('Movie', new mongoose.Schema({
         required: true,
         min: 0,
         max: 255
+    },
+    liked: {
+        type: Boolean,
+        default: false
     }
 }))
 
@@ -36,7 +40,8 @@ function validateMovie (movie) {
         // genreId: Joi.string().regex(/^[0-9a-fA-F]{24}$}/),
         genreId: Joi.objectId().required(),
         numberInStock: Joi.number().min(0).required(),
-        dailyRentalRate: Joi.number().min(0).required()
+        dailyRentalRate: Joi.number().min(0).required(),
+        liked: Joi.boolean()
     })
 
     return schema.validate(movie)
