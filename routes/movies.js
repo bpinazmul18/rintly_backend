@@ -3,6 +3,7 @@ const router = express.Router()
 const { Movie, validate } = require('../models/movie')
 const { Genre } = require('../models/genre')
 const auth = require('../middleware/auth')
+const validateObjectId = require('../middleware/validateObjectId')
 
 router.get('/', async(req, res) => {
     const movies = await Movie.find()
@@ -41,6 +42,19 @@ router.post('/', [auth], async (req, res) => {
 router.get('/:id', async (req, res) => {
     // Find user by ID
     const movie = await Movie.findById(req.params.id)
+    if(!movie) return res.status(404).send('movie was not found by given ID!')
+
+    // Response to the client
+    return res.send(movie)
+})
+
+router.put("/:id", [auth, validateObjectId], async (req, res) => {
+    // Get data by ID and validate input field
+    const {error, value} = validate(req.body)
+    if(error) return res.status(400).send(error['details'][0].message)
+
+    // Find movies= by ID and update
+    const movie = await Movie.findByIdAndUpdate(req.params.id, value, { new: true})
     if(!movie) return res.status(404).send('movie was not found by given ID!')
 
     // Response to the client
