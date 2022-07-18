@@ -39,7 +39,7 @@ router.post('/', [auth], async (req, res) => {
     return res.send(movie)
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', [validateObjectId], async (req, res) => {
     // Find user by ID
     const movie = await Movie.findById(req.params.id)
     if(!movie) return res.status(404).send('movie was not found by given ID!')
