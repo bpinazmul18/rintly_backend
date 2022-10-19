@@ -1,7 +1,7 @@
 {
-    "name": "Rintly --Default",
-    "dbURI": "mongodb://localhost:27017/rintly",
-    "jwtPrivateKey": "123",
-    "port": "3001",
-    "requiresAuth": true
+  "name": "Rintly --Default",
+  "dbURI": "mongodb://localhost:27017/rintly",
+  "jwtPrivateKey": "123",
+  "port": "9001",
+  "requiresAuth": true
 }

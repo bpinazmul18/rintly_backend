@@ -11,6 +11,8 @@ require('./startup/config')()
 
 const port = process.env.PORT || config.get('port')
 
-const server = app.listen(port, ()=> winston.info(`App listening on port http://localhost:${config.get('port')}`))
+const server = app.listen(port, () =>
+  winston.info(`App listening on port http://localhost:${port}`)
+)
 
 module.exports = server
