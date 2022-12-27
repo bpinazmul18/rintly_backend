@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon index.js",
     "test": "jest --forceExit --verbose --maxWorkers=1",
-    "test:without-server-close": "jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1"
+    "test:without-server-close": "jest --forceExit  --watchAll --maxWorkers=1"
   },
   "engines": {
     "node": "18.12.1"
