@@ -9,7 +9,7 @@
     "test:without-server-close": "jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1"
   },
   "engines": {
-    "node": "17.9.0"
+    "node": "18.12.1"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
